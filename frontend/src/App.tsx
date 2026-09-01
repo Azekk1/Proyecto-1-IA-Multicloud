@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { DermatologyAnalysisResponse } from './dermatology';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function App() {
   const [file1, setFile1] = useState<File | null>(null);
@@ -174,9 +176,16 @@ export default function App() {
             <h3 style={{ margin: '0 0 10px 0', fontSize: '16px', color: '#0f172a' }}>
               📋 Reporte de Evolución Clínica
             </h3>
-            <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6', color: '#334155', fontSize: '14px' }}>
-              {result.clinical_report}
-            </div>
+            <div style={{ background: '#fff', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '24px', marginTop: '10px' }}>
+  <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', color: '#0f172a', borderBottom: '2px solid #e2e8f0', paddingBottom: '8px' }}>
+    📋 Reporte de Evolución Clínica
+              </h3>
+              <div className="markdown-body" style={{ lineHeight: '1.7', color: '#334155', fontSize: '14px' }}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {result.clinical_report}
+                </ReactMarkdown>
+              </div>
+            </div>  
           </div>
         </div>
       )}
