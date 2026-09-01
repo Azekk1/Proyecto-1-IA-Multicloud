@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+opencv-python-headless
+numpy
+openai
+chromadb
+sentence-transformers
+pillow
