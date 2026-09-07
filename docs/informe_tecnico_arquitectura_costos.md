@@ -69,7 +69,7 @@ Evaluación realizada bajo condiciones idénticas de entrada sobre hardware loca
 ## 5. Análisis Financiero: Hardware Local (CAPEX) vs. Cloud (OPEX)
 
 ### Estructura de Costos del Proyecto
-* **Inversión Inicial de Hardware (CAPEX):** `$1,350.00 USD` (Adquisición de Workstation Edge con GPU 12-16GB).
+* **Inversión Inicial de Hardware (CAPEX):** `$1,850.00 USD` (Adquisición de Workstation Edge con GPU 12-16GB).
 * **Gasto Operativo Local (OPEX):** `$18.00 USD/mes` (Consumo eléctrico de ~250W durante jornadas de 9 horas).
 
 ### Matriz Comparativa Anual por Volumen de Consultas
