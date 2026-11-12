@@ -1,10 +1,23 @@
+import os
 import httpx
 from typing import Dict, Any
+from dotenv import load_dotenv
 
-LM_STUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"
+load_dotenv()
+
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
+AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
+AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION", "2024-08-01-preview")
+
+LM_STUDIO_URL = os.getenv("LM_STUDIO_URL", "http://127.0.0.1:1234/v1/chat/completions")
 
 async def generate_clinical_report(metrics: Dict[str, Any], guidelines_context: str) -> str:
-    """Envía el prompt estructurado al servidor local de LM Studio."""
+    """
+    Genera el informe clínico con Azure OpenAI (gpt-4o en Azure AI Foundry).
+    Si la nube no responde o hay fallo de red, aplica fallback automático
+    al servidor local de LM Studio y finalmente a una evaluación matemática de respaldo.
+    """
     prompt = f"""Eres un asistente de apoyo al diagnóstico dermatológico clínico. Analiza la siguiente evolución entre dos controles fotográficos.
 
 ### Datos Cuantitativos (OpenCV):
@@ -31,15 +44,33 @@ async def generate_clinical_report(metrics: Dict[str, Any], guidelines_context: 
         "max_tokens": 1500
     }
 
+    # 1. Intento primario: Azure OpenAI (gpt-4o en Azure AI Foundry)
+    if AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY:
+        azure_base = AZURE_OPENAI_ENDPOINT.rstrip('/')
+        azure_url = f"{azure_base}/openai/deployments/{AZURE_OPENAI_DEPLOYMENT}/chat/completions?api-version={AZURE_OPENAI_API_VERSION}"
+        headers = {
+            "api-key": AZURE_OPENAI_API_KEY,
+            "Content-Type": "application/json"
+        }
+        try:
+            async with httpx.AsyncClient(timeout=45.0) as client:
+                res = await client.post(azure_url, headers=headers, json=payload)
+                res.raise_for_status()
+                data = res.json()
+                return data["choices"][0]["message"]["content"]
+        except Exception as azure_err:
+            print(f"[Aviso Resiliencia] Fallo en Azure OpenAI: {azure_err}. Intentando fallback local...")
+
+    # 2. Intento secundario (Fallback local): LM Studio
     try:
-        async with httpx.AsyncClient(timeout=60.0) as client:
+        async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.post(LM_STUDIO_URL, json=payload)
             response.raise_for_status()
             data = response.json()
             return data["choices"][0]["message"]["content"]
     except Exception as e:
         return (
-            f"Aviso de Sistema: Servidor LM Studio local no detectado en http://127.0.0.1:1234.\n"
+            f"Aviso de Sistema: Servidores de inferencia (Azure AI Foundry y LM Studio local) no disponibles.\n"
             f"Detalle técnico: {str(e)}\n\n"
             f"[Evaluación Matemática de Respaldo]:\n"
             f"El análisis de OpenCV calculó una variación de área de {metrics.get('delta_area_percent')}% "

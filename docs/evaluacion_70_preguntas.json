@@ -1,0 +1,1012 @@
+[
+  {
+    "id": "EXP_01",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +21.5% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_02",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +25.0% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_03",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +33.3% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_04",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +49.5% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_05",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +22.0% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_06",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +28.4% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_07",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +40.0% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_08",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +55.2% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_09",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +20.5% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_10",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +23.1% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_11",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +35.8% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_12",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +42.0% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_13",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +60.1% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_14",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +26.7% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "EXP_15",
+    "categoria": "expansion_malignidad_abcde",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Paciente presenta lesión melanocítica con variación de área de +31.0% en intervalo semestral. Según el protocolo ABCDE y guías de consenso, ¿cuál es la sospecha diagnóstica y la conducta recomendada?",
+    "criterios_esperados": [
+      "melanoma",
+      "sospecha",
+      "20%",
+      "biopsia",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Derivación urgente a biopsia o dermatoscopia por sospecha de melanoma",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_01",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -32.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_02",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -45.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_03",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -60.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_04",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -80.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_05",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -100.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_06",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -35.5% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_07",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -50.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_08",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -75.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_09",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -90.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_10",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -40.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_11",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -65.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_12",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -85.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_13",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -95.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_14",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -38.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "REG_15",
+    "categoria": "regresion_tumoral",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "En el control dermatológico se detecta una reducción del área lesional del -48.0% sin extirpación quirúrgica previa. ¿Se debe clasificar como curación benigna espontánea o como fenómeno de regresión tumoral de alto riesgo?",
+    "criterios_esperados": [
+      "regresion",
+      "no es curacion",
+      "alto riesgo",
+      "inmunologica",
+      "melanoma"
+    ],
+    "conducta_correcta": "Fenómeno de regresión tumoral de alto riesgo / derivación prioritaria",
+    "nivel_riesgo": "ALTO"
+  },
+  {
+    "id": "ASYM_01",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.25, con un índice actual de 0.45 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_02",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.18, con un índice actual de 0.52 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_03",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.15, con un índice actual de 0.58 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_04",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.3, con un índice actual de 0.4 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_05",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.12, con un índice actual de 0.55 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_06",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.22, con un índice actual de 0.48 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_07",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.19, con un índice actual de 0.5 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_08",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.35, con un índice actual de 0.39 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_09",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.1, con un índice actual de 0.57 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "ASYM_10",
+    "categoria": "asimetria_circularidad",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Lesión pigmentada muestra variación de circularidad de delta -0.28, con un índice actual de 0.42 (< 0.60). ¿Qué significado morfométrico tiene y qué riesgo estructural implica?",
+    "criterios_esperados": [
+      "asimetria",
+      "circularidad",
+      "atipia estructural",
+      "bordes",
+      "tension superficial"
+    ],
+    "conducta_correcta": "Atipia estructural y crecimiento asimétrico / evaluar dermatoscopia",
+    "nivel_riesgo": "MODERADO_ALTO"
+  },
+  {
+    "id": "BEN_01",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de 0.5% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_02",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de -1.2% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_03",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de 2.1% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_04",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de -2.8% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_05",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de 1.8% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_06",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de -0.5% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_07",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de 3.2% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_08",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de -1.9% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_09",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de 0.0% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "BEN_10",
+    "categoria": "estabilidad_benigna",
+    "kb_objetivo": "kb-criterios-clinicos",
+    "pregunta": "Control anual de nevo muestra delta de área de 2.5% (dentro de +/- 5%) y circularidad de 0.82 (> 0.70). ¿Cuál es la interpretación biológica y la pauta de seguimiento?",
+    "criterios_esperados": [
+      "benigno",
+      "estable",
+      "quiescente",
+      "anual",
+      "5%"
+    ],
+    "conducta_correcta": "Nevo quiescente y benigno / seguimiento anual y autoexamen",
+    "nivel_riesgo": "BAJO"
+  },
+  {
+    "id": "TRG_01",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Sospecha de melanoma con incremento de área de +38%\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "rojo",
+      "48"
+    ],
+    "conducta_correcta": "Nivel Rojo (Nivel 1) con tiempo de atención máximo en 48 a 72 horas",
+    "nivel_riesgo": "Rojo (Nivel 1)"
+  },
+  {
+    "id": "TRG_02",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Regresión tumoral espontánea de -55% sin antecedente quirúrgico\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "rojo",
+      "48"
+    ],
+    "conducta_correcta": "Nivel Rojo (Nivel 1) con tiempo de atención máximo en 48 a 72 horas",
+    "nivel_riesgo": "Rojo (Nivel 1)"
+  },
+  {
+    "id": "TRG_03",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Nevo con crecimiento de +12% y circularidad de 0.68\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "naranjo",
+      "15"
+    ],
+    "conducta_correcta": "Nivel Naranjo (Nivel 2) con tiempo de atención máximo en 15 dias",
+    "nivel_riesgo": "Naranjo (Nivel 2)"
+  },
+  {
+    "id": "TRG_04",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Paciente con antecedentes familiares de melanoma y cambio de área de +4.2%\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "amarillo",
+      "30"
+    ],
+    "conducta_correcta": "Nivel Amarillo (Nivel 3) con tiempo de atención máximo en 30 dias",
+    "nivel_riesgo": "Amarillo (Nivel 3)"
+  },
+  {
+    "id": "TRG_05",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Nevo intradérmico estable con delta de área de +1.1% y circularidad 0.85\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "verde",
+      "Seguimiento"
+    ],
+    "conducta_correcta": "Nivel Verde (Nivel 4) con tiempo de atención máximo en Seguimiento anual",
+    "nivel_riesgo": "Verde (Nivel 4)"
+  },
+  {
+    "id": "TRG_06",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Lesión con puntuación Glasgow de 4 puntos (cambio de tamaño, color y forma)\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "rojo",
+      "48"
+    ],
+    "conducta_correcta": "Nivel Rojo (Nivel 1) con tiempo de atención máximo en 48 a 72 horas",
+    "nivel_riesgo": "Rojo (Nivel 1)"
+  },
+  {
+    "id": "TRG_07",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Lesión asimétrica moderada con circularidad 0.64 sin ulceración\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "naranjo",
+      "15"
+    ],
+    "conducta_correcta": "Nivel Naranjo (Nivel 2) con tiempo de atención máximo en 15 dias",
+    "nivel_riesgo": "Naranjo (Nivel 2)"
+  },
+  {
+    "id": "TRG_08",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Lesión con delta de área de +18.5% en paciente sin otros factores de riesgo\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "naranjo",
+      "15"
+    ],
+    "conducta_correcta": "Nivel Naranjo (Nivel 2) con tiempo de atención máximo en 15 dias",
+    "nivel_riesgo": "Naranjo (Nivel 2)"
+  },
+  {
+    "id": "TRG_09",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Nevo pigmentado con variación controlada de -2.5% y circularidad 0.79\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "verde",
+      "Seguimiento"
+    ],
+    "conducta_correcta": "Nivel Verde (Nivel 4) con tiempo de atención máximo en Seguimiento anual",
+    "nivel_riesgo": "Verde (Nivel 4)"
+  },
+  {
+    "id": "TRG_10",
+    "categoria": "protocolo_triage_tiempos",
+    "kb_objetivo": "kb-protocolos-triage",
+    "pregunta": "Según el protocolo de triage dermatológico, ante: \"Disminución brusca del 90% del tamaño de nódulo pigmentado en 4 meses\", ¿a qué nivel de triage corresponde y cuál es el plazo máximo de atención especializada?",
+    "criterios_esperados": [
+      "rojo",
+      "48"
+    ],
+    "conducta_correcta": "Nivel Rojo (Nivel 1) con tiempo de atención máximo en 48 a 72 horas",
+    "nivel_riesgo": "Rojo (Nivel 1)"
+  },
+  {
+    "id": "LIM_01",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Variación de área exactamente en +19.8% con circularidad en 0.71\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_02",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Disminución de área del -22% con leve aclaramiento central\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_03",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Incremento de área de +20.2% en paciente joven en estado de embarazo\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_04",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Circularidad límite de 0.61 con delta de área de +6.5%\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_05",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Reducción de área del -18% tras traumatismo superficial en la zona\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_06",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Puntuación Glasgow de 2 puntos menores y 1 mayor (total 3 puntos)\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_07",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Variación de área de +5.8% en paciente de 78 años con fotodaño severo\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_08",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Circularidad de 0.59 con bordes escotados y área estable (+2%)\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_09",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Disminución del -28% del área lesional tras tratamiento con corticoide tópico\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  },
+  {
+    "id": "LIM_10",
+    "categoria": "casos_limite_variabilidad",
+    "kb_objetivo": "ambas_kbs",
+    "pregunta": "Analice la siguiente situación limítrofe: \"Crecimiento del +21% pero en intervalo de 14 meses en vez de 6 meses\". ¿Qué elementos de las guías clínicas y del protocolo de triage entran en conflicto y qué recomendación preventiva debe emitirse?",
+    "criterios_esperados": [
+      "criterio",
+      "precaucion",
+      "seguimiento",
+      "dermatoscopia"
+    ],
+    "conducta_correcta": "Evaluación preventiva con dermatoscopia estrecha",
+    "nivel_riesgo": "LIMÍTROFE"
+  }
+]
