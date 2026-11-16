@@ -2,19 +2,19 @@ import React, { useState, useRef } from 'react';
 import type { DermatologyAnalysisResponse } from './dermatology';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import './App.css';
 import {
   Activity,
-  Crosshair,
   Upload,
   RotateCcw,
   ShieldCheck,
-  Database,
   AlertTriangle,
   FileText,
-  Layers,
-  Cpu,
+  Printer,
   CheckCircle2,
-  SlidersHorizontal
+  ScanLine,
+  BookOpen,
+  Info
 } from 'lucide-react';
 
 interface Box {
@@ -32,7 +32,11 @@ export default function App() {
   const [box1, setBox1] = useState<Box | null>(null);
   const [box2, setBox2] = useState<Box | null>(null);
   const [noLesion2, setNoLesion2] = useState<boolean>(false);
-  const [studyId] = useState<string>(() => `DG-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+
+  // Datos de contexto clínico de la consulta
+  const [patientCode, setPatientCode] = useState<string>('FICHA-2026-0419');
+  const [anatomicalSite, setAnatomicalSite] = useState<string>('Dorso superior / Escápula');
+  const [controlInterval, setControlInterval] = useState<string>('6 meses (Estándar)');
 
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<DermatologyAnalysisResponse | null>(null);
@@ -140,326 +144,174 @@ export default function App() {
 
       if (!response.ok) {
         const err = await response.json().catch(() => null);
-        throw new Error(err?.detail || `HTTP ${response.status}`);
+        throw new Error(err?.detail || `Error del servidor (${response.status})`);
       }
 
       const data: DermatologyAnalysisResponse = await response.json();
       setResult(data);
     } catch (err: any) {
-      setError(err.message || 'Fallo de comunicación con el nodo Edge (:8000).');
+      setError(err.message || 'No fue posible comunicarse con el servicio de análisis clínico.');
     } finally {
       setLoading(false);
     }
   };
 
-  const formatRoiReadout = (b: Box | null, absent = false) => {
-    if (absent) return 'ROI: REMISION / EXERESIS (0.00, 0.00)';
-    if (!b || b.w < 0.01) return 'ROI: AUTO-CENTER [0.20, 0.20, 0.60×0.60]';
-    return `ROI: [${b.x.toFixed(2)}, ${b.y.toFixed(2)}] DIM: ${(b.w * 100).toFixed(1)}%×${(b.h * 100).toFixed(1)}%`;
-  };
-
-  const getClinicalStatus = (deltaArea: number, deltaCirc: number) => {
+  const getClinicalTriage = (deltaArea: number, deltaCirc: number) => {
     if (deltaArea <= -30) {
       return {
-        level: 'PRIORIDAD ROJA (NIVEL 1 - URGENCIA <= 48-72H)',
-        reason: 'SOSPECHA DE REGRESIÓN TUMORAL INMUNOLÓGICA (Δ ÁREA <= -30%)',
+        priority: 'Prioridad Alta — Derivación Preferente (<= 48–72 h)',
+        summary: 'Reducción significativa de superficie compatible con fenómeno de regresión.',
+        action: 'Biopsia escisional / Evaluación oncológica prioritaria',
         bg: '#fef2f2',
-        border: '#dc2626',
-        color: '#991b1b',
-        badgeBg: '#dc2626'
+        border: '#fecaca',
+        accent: '#dc2626',
+        text: '#991b1b'
       };
     }
     if (deltaArea >= 20) {
       return {
-        level: 'PRIORIDAD ROJA / NARANJA (DERIVACIÓN PRIORITARIA)',
-        reason: 'EXPANSIÓN LESIONAL SOBRE UMBRAL ABCDE (Δ ÁREA >= +20%)',
+        priority: 'Prioridad Alta — Evaluación Especializada',
+        summary: 'Crecimiento dimensional superior al umbral clínico de estabilidad (+20%).',
+        action: 'Dermatoscopia presencial y eventual exéresis diagnóstica',
         bg: '#fff7ed',
-        border: '#ea580c',
-        color: '#9a3412',
-        badgeBg: '#ea580c'
+        border: '#fed7aa',
+        accent: '#ea580c',
+        text: '#9a3412'
       };
     }
     if (deltaCirc <= -0.08) {
       return {
-        level: 'PRIORIDAD AMARILLA (CONTROL DERMATOSCÓPICO <= 30 DÍAS)',
-        reason: 'PÉRDIDA DE SIMETRÍA Y TENSIÓN PERIMETRAL (Δ CIRCULARIDAD <= -0.08)',
+        priority: 'Prioridad Moderada — Control Adelantado (<= 30 días)',
+        summary: 'Incremento de irregularidad perimetral y pérdida de simetría.',
+        action: 'Control dermatoscópico digital a corto plazo',
         bg: '#fefce8',
-        border: '#ca8a04',
-        color: '#854d0e',
-        badgeBg: '#ca8a04'
+        border: '#fef08a',
+        accent: '#ca8a04',
+        text: '#854d0e'
       };
     }
     return {
-      level: 'PRIORIDAD VERDE (SEGUIMIENTO ANUAL ESTÁNDAR)',
-      reason: 'ESTABILIDAD MORFOMÉTRICA DENTRO DE PARÁMETROS BENIGNOS',
+      priority: 'Riesgo Bajo — Conducta de Seguimiento Habitual',
+      summary: 'Parámetros dimensionales y morfológicos dentro de rangos de estabilidad.',
+      action: 'Control periódico anual y fotoprotección',
       bg: '#f0fdf4',
-      border: '#0d9488',
-      color: '#115e59',
-      badgeBg: '#0d9488'
+      border: '#bbf7d0',
+      accent: '#16a34a',
+      text: '#166534'
     };
   };
 
-  const statusInfo = result
-    ? getClinicalStatus(result.metrics.delta_area_percent, result.metrics.delta_circularity)
+  const triage = result
+    ? getClinicalTriage(result.metrics.delta_area_percent, result.metrics.delta_circularity)
     : null;
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f3f5f8' }}>
-      {/* TOP HOSPITAL WORKSTATION BAR */}
-      <header
-        style={{
-          backgroundColor: '#0b111e',
-          color: '#f8fafc',
-          borderBottom: '1px solid #1e293b',
-          padding: '0 24px',
-          height: '52px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          fontSize: '12px'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div
-              style={{
-                width: '10px',
-                height: '10px',
-                backgroundColor: '#0284c7',
-                border: '1px solid #38bdf8'
-              }}
-            />
-            <span style={{ fontWeight: 700, fontSize: '14px', letterSpacing: '0.04em', color: '#ffffff' }}>
-              DERMAGUARD
-            </span>
-            <span
-              className="mono"
-              style={{
-                fontSize: '11px',
-                color: '#38bdf8',
-                backgroundColor: 'rgba(2, 132, 199, 0.18)',
-                border: '1px solid rgba(56, 189, 248, 0.35)',
-                padding: '2px 6px'
-              }}
-            >
-              PACS WORKSTATION v2.4
-            </span>
+    <div className="app-shell">
+      {/* TOP CLINICAL NAVBAR */}
+      <header className="clinical-navbar">
+        <div className="navbar-inner">
+          <div className="brand-group">
+            <div className="brand-logo">
+              <ScanLine size={20} />
+            </div>
+            <div>
+              <h1 className="brand-title">DermaGuard</h1>
+              <p className="brand-subtitle">Plataforma de Seguimiento Dermatoscópico Digital</p>
+            </div>
           </div>
-          <span style={{ color: '#334155' }}>|</span>
-          <span style={{ color: '#94a3b8' }}>
-            UNIDAD DE DERMATOLOGÍA ONCOLÓGICA &amp; TELEMEDICINA
-          </span>
-        </div>
 
-        <div className="mono" style={{ display: 'flex', alignItems: 'center', gap: '18px', fontSize: '11px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#cbd5e1' }}>
-            <Cpu size={13} color="#10b981" />
-            <span>EDGE NODE: CIE-LAB ΔE LOCAL</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#cbd5e1' }}>
-            <Layers size={13} color="#38bdf8" />
-            <span>ORCHESTRATOR: ADK 3-LEVEL</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#cbd5e1' }}>
-            <Database size={13} color="#f59e0b" />
-            <span>RAG: AZURE AI FOUNDRY (2 KBs)</span>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              backgroundColor: 'rgba(16, 185, 129, 0.12)',
-              border: '1px solid rgba(16, 185, 129, 0.35)',
-              color: '#34d399',
-              padding: '3px 8px'
-            }}
-          >
-            <ShieldCheck size={13} />
-            <span>ZERO-TRUST NSG</span>
+          <div className="navbar-actions">
+            <span className="privacy-pill">
+              <ShieldCheck size={14} />
+              Procesamiento de Imagen Anonimizado en Local
+            </span>
+
+            {(file1 || file2 || result) && (
+              <button onClick={handleReset} className="btn btn-secondary no-print">
+                <RotateCcw size={15} />
+                Nueva Evaluación
+              </button>
+            )}
           </div>
         </div>
       </header>
 
-      {/* CLINICAL SESSION METADATA & TOOLBAR */}
-      <div
-        style={{
-          backgroundColor: '#ffffff',
-          borderBottom: '1px solid #dce2ec',
-          padding: '10px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '12px'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', fontSize: '12px' }}>
-          <div>
-            <span style={{ color: '#64748b', fontWeight: 500, marginRight: '6px' }}>ID ESTUDIO:</span>
-            <span className="mono" style={{ fontWeight: 600, color: '#0f172a' }}>{studyId}</span>
-          </div>
-          <div>
-            <span style={{ color: '#64748b', fontWeight: 500, marginRight: '6px' }}>PROTOCOLO:</span>
-            <span style={{ fontWeight: 600, color: '#0f172a' }}>Seguimiento Bi-Temporal (0 – 6 Meses)</span>
-          </div>
-          <div>
-            <span style={{ color: '#64748b', fontWeight: 500, marginRight: '6px' }}>ALGORITMO EDGE:</span>
-            <span className="mono" style={{ color: '#334155' }}>CIE L*a*b* ΔE + Umbralización Otsu + Cierre Elíptico 5×5</span>
-          </div>
-          <div>
-            <span style={{ color: '#64748b', fontWeight: 500, marginRight: '6px' }}>SOBERANÍA:</span>
-            <span style={{ color: '#0d9488', fontWeight: 600 }}>Sin Exfiltración de Píxeles Biométricos</span>
-          </div>
-        </div>
+      {/* MAIN CONTAINER */}
+      <main className="main-container">
+        {/* PATIENT / CONSULTATION CONTEXT BAR */}
+        <section className="context-bar">
+          <div className="context-items">
+            <div className="context-item">
+              <label className="context-label" htmlFor="patient-code">ID Ficha / Estudio</label>
+              <input
+                id="patient-code"
+                className="context-input"
+                type="text"
+                value={patientCode}
+                onChange={(e) => setPatientCode(e.target.value)}
+              />
+            </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button
-            onClick={handleReset}
-            disabled={!file1 && !file2 && !result}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '7px 14px',
-              fontSize: '12px',
-              fontWeight: 600,
-              backgroundColor: '#ffffff',
-              color: (!file1 && !file2 && !result) ? '#94a3b8' : '#334155',
-              border: '1px solid #cbd5e1',
-              cursor: (!file1 && !file2 && !result) ? 'not-allowed' : 'pointer',
-              textTransform: 'uppercase',
-              letterSpacing: '0.03em'
-            }}
-          >
-            <RotateCcw size={13} />
-            Reiniciar Estudio
-          </button>
+            <div className="context-item">
+              <label className="context-label" htmlFor="anatomical-site">Localización Anatómica</label>
+              <select
+                id="anatomical-site"
+                className="context-input"
+                value={anatomicalSite}
+                onChange={(e) => setAnatomicalSite(e.target.value)}
+              >
+                <option value="Dorso superior / Escápula">Dorso superior / Escápula</option>
+                <option value="Tórax anterior">Tórax anterior</option>
+                <option value="Cabeza y cuello">Cabeza y cuello</option>
+                <option value="Extremidad superior">Extremidad superior</option>
+                <option value="Extremidad inferior">Extremidad inferior</option>
+                <option value="Región acral (palmar/plantar)">Región acral (palmar/plantar)</option>
+              </select>
+            </div>
 
-          <button
-            onClick={handleAnalyze}
-            disabled={!file1 || !file2 || loading}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '7px 18px',
-              fontSize: '12px',
-              fontWeight: 600,
-              backgroundColor: (!file1 || !file2 || loading) ? '#94a3b8' : '#0284c7',
-              color: '#ffffff',
-              border: '1px solid',
-              borderColor: (!file1 || !file2 || loading) ? '#94a3b8' : '#0369a1',
-              cursor: (!file1 || !file2 || loading) ? 'not-allowed' : 'pointer',
-              textTransform: 'uppercase',
-              letterSpacing: '0.04em'
-            }}
-          >
-            <Activity size={14} />
-            {loading ? 'Procesando Telemetría y Consultando KBs...' : 'Ejecutar Evaluación Bi-Temporal'}
-          </button>
-        </div>
-      </div>
-
-      {/* MAIN WORKSPACE CONTAINER */}
-      <main style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '20px 24px', flex: 1 }}>
-        {/* OPERATOR PROTOCOL NOTICE */}
-        <div
-          style={{
-            backgroundColor: '#ffffff',
-            border: '1px solid #dce2ec',
-            borderLeft: '3px solid #0284c7',
-            padding: '10px 16px',
-            marginBottom: '18px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            fontSize: '12.5px',
-            color: '#334155'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Crosshair size={15} color="#0284c7" />
-            <span>
-              <strong>PROCEDIMIENTO DE DELIMITACIÓN ROI:</strong> Cargue los controles dermatoscópicos T0 y T1. Trace con el cursor el recuadro de la Región de Interés (ROI) conteniendo la lesión y un margen perimetral de piel sana para calibrar la línea base colorimétrica.
-            </span>
+            <div className="context-item">
+              <label className="context-label" htmlFor="control-interval">Intervalo entre Controles</label>
+              <select
+                id="control-interval"
+                className="context-input"
+                value={controlInterval}
+                onChange={(e) => setControlInterval(e.target.value)}
+              >
+                <option value="3 meses (Corto plazo)">3 meses (Corto plazo)</option>
+                <option value="6 meses (Estándar)">6 meses (Estándar)</option>
+                <option value="12 meses (Anual)">12 meses (Anual)</option>
+              </select>
+            </div>
           </div>
-          <span className="mono" style={{ fontSize: '11px', color: '#64748b', whiteSpace: 'nowrap', marginLeft: '16px' }}>
-            ESCISIONAL REF: ABCDE &gt;20% | REGRESIÓN &le;-30%
-          </span>
-        </div>
 
-        {/* DUAL PACS VIEWPORTS (CONTROL 1 & CONTROL 2) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px', marginBottom: '20px' }}>
-          {/* VIEWPORT T0 */}
-          <section
-            style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #dce2ec',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {/* Panel Header */}
-            <div
-              style={{
-                padding: '10px 14px',
-                backgroundColor: '#f8fafc',
-                borderBottom: '1px solid #dce2ec',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span
-                  className="mono"
-                  style={{
-                    backgroundColor: '#0f172a',
-                    color: '#f8fafc',
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    padding: '2px 6px'
-                  }}
-                >
-                  T0 • BASAL
-                </span>
-                <span style={{ fontWeight: 600, fontSize: '13px', color: '#0f172a' }}>
-                  Registro Fotográfico Inicial (Mes 0)
-                </span>
+          <div className="context-item" style={{ textAlign: 'right' }}>
+            <span className="context-label">Fecha de Emisión</span>
+            <span className="context-value">{new Date().toLocaleDateString('es-CL')}</span>
+          </div>
+        </section>
+
+        {/* DUAL IMAGE CAPTURE WORKSPACE */}
+        <section className="capture-grid no-print">
+          {/* CONTROL 1 (BASAL) */}
+          <div className="capture-card">
+            <div className="capture-header">
+              <div className="capture-title-group">
+                <span className={`step-badge ${preview1 ? 'active' : ''}`}>Control 1</span>
+                <h2 className="capture-title">Registro Basal (Primera Consulta)</h2>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                {preview1 && (
-                  <>
-                    <button
-                      onClick={() => setBox1(null)}
-                      style={{
-                        background: 'none',
-                        border: '1px solid #cbd5e1',
-                        padding: '3px 8px',
-                        fontSize: '11px',
-                        color: '#475569',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Restablecer ROI
+
+              {preview1 && (
+                <div className="capture-controls">
+                  {box1 && (
+                    <button type="button" onClick={() => setBox1(null)} className="btn-ghost">
+                      Restablecer área
                     </button>
-                    <label
-                      htmlFor="c1"
-                      style={{
-                        border: '1px solid #cbd5e1',
-                        padding: '3px 8px',
-                        fontSize: '11px',
-                        color: '#0284c7',
-                        fontWeight: 600,
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Cambiar Archivo
-                    </label>
-                  </>
-                )}
-              </div>
+                  )}
+                  <label htmlFor="c1" className="btn-ghost">
+                    Cambiar imagen
+                  </label>
+                </div>
+              )}
             </div>
 
             <input
@@ -471,210 +323,70 @@ export default function App() {
               onChange={(e) => handleFileChange(e, 1)}
             />
 
-            {/* Viewport Area */}
-            <div
-              className="pacs-viewport"
-              style={{
-                height: '320px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
+            <div className="capture-body">
               {!preview1 ? (
-                <label
-                  htmlFor="c1"
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '28px 40px',
-                    border: '1px dashed #475569',
-                    backgroundColor: 'rgba(15, 23, 42, 0.75)',
-                    color: '#cbd5e1',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Upload size={22} color="#38bdf8" />
-                  <span style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.02em' }}>
-                    CARGAR IMAGEN DERMATOSCÓPICA BASAL (T0)
-                  </span>
-                  <span className="mono" style={{ fontSize: '11px', color: '#64748b' }}>
-                    FORMATOS SOPORTADOS: PNG, JPG, BMP, TIFF
-                  </span>
+                <label htmlFor="c1" className="upload-dropzone">
+                  <div className="upload-icon-circle">
+                    <Upload size={20} />
+                  </div>
+                  <div className="upload-primary-text">Seleccionar fotografía basal</div>
+                  <div className="upload-secondary-text">
+                    Formatos admitidos: JPG, PNG, TIFF • Imagen dermatoscópica o clínica macro
+                  </div>
                 </label>
               ) : (
                 <div
-                  style={{
-                    position: 'relative',
-                    display: 'inline-block',
-                    cursor: 'crosshair',
-                    userSelect: 'none',
-                    maxHeight: '300px',
-                    maxWidth: '95%'
-                  }}
+                  className="image-stage"
                   onMouseDown={(e) => handleMouseDown(e, 1)}
                   onMouseMove={(e) => handleMouseMove(e, 1)}
                   onMouseUp={() => handleMouseUp(1)}
                 >
-                  <img
-                    src={preview1}
-                    alt="Control T0"
-                    style={{
-                      maxHeight: '300px',
-                      maxWidth: '100%',
-                      display: 'block',
-                      pointerEvents: 'none',
-                      border: '1px solid #334155'
-                    }}
-                  />
+                  <img src={preview1} alt="Registro Basal" />
                   {box1 && box1.w > 0 && (
                     <div
+                      className="roi-overlay"
                       style={{
-                        position: 'absolute',
-                        border: '1.5px solid #38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.14)',
-                        boxShadow: '0 0 0 1px rgba(11, 17, 30, 0.6)',
                         left: `${box1.x * 100}%`,
                         top: `${box1.y * 100}%`,
                         width: `${box1.w * 100}%`,
                         height: `${box1.h * 100}%`,
-                        pointerEvents: 'none'
                       }}
-                    >
-                      <span
-                        className="mono"
-                        style={{
-                          position: 'absolute',
-                          top: '-18px',
-                          left: 0,
-                          backgroundColor: '#0284c7',
-                          color: '#ffffff',
-                          fontSize: '9.5px',
-                          padding: '1px 4px',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        ROI-T0
-                      </span>
-                    </div>
+                    />
                   )}
                 </div>
               )}
             </div>
 
-            {/* Viewport Telemetry Footer */}
-            <div
-              className="mono"
-              style={{
-                padding: '7px 14px',
-                backgroundColor: '#0f172a',
-                color: '#94a3b8',
-                borderTop: '1px solid #1e293b',
-                fontSize: '11px',
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              <span>ARCHIVO: {file1 ? file1.name : 'SIN_ASIGNAR'}</span>
-              <span style={{ color: '#38bdf8' }}>{formatRoiReadout(box1)}</span>
+            <div className="capture-footer">
+              <span>{file1 ? file1.name : 'Ningún archivo seleccionado'}</span>
+              <span>
+                {box1 && box1.w > 0.01
+                  ? 'Área de interés delimitada manualmente'
+                  : 'Arrastre sobre la imagen para delimitar la lesión'}
+              </span>
             </div>
-          </section>
+          </div>
 
-          {/* VIEWPORT T1 */}
-          <section
-            style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #dce2ec',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {/* Panel Header */}
-            <div
-              style={{
-                padding: '10px 14px',
-                backgroundColor: '#f8fafc',
-                borderBottom: '1px solid #dce2ec',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span
-                  className="mono"
-                  style={{
-                    backgroundColor: '#0284c7',
-                    color: '#ffffff',
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    padding: '2px 6px'
-                  }}
-                >
-                  T1 • +6 MESES
-                </span>
-                <span style={{ fontWeight: 600, fontSize: '13px', color: '#0f172a' }}>
-                  Control Evolutivo Posterior (Mes 6)
-                </span>
+          {/* CONTROL 2 (SEGUIMIENTO) */}
+          <div className="capture-card">
+            <div className="capture-header">
+              <div className="capture-title-group">
+                <span className={`step-badge ${preview2 ? 'active' : ''}`}>Control 2</span>
+                <h2 className="capture-title">Registro de Seguimiento (Control Actual)</h2>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                {preview2 && (
-                  <>
-                    <label
-                      style={{
-                        fontSize: '11.5px',
-                        color: '#334155',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                        fontWeight: 500
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={noLesion2}
-                        onChange={(e) => {
-                          setNoLesion2(e.target.checked);
-                          if (e.target.checked) setBox2(null);
-                        }}
-                      />
-                      Ausencia / Regresión Total
-                    </label>
-                    {!noLesion2 && (
-                      <button
-                        onClick={() => setBox2(null)}
-                        style={{
-                          background: 'none',
-                          border: '1px solid #cbd5e1',
-                          padding: '3px 8px',
-                          fontSize: '11px',
-                          color: '#475569',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Restablecer ROI
-                      </button>
-                    )}
-                    <label
-                      htmlFor="c2"
-                      style={{
-                        border: '1px solid #cbd5e1',
-                        padding: '3px 8px',
-                        fontSize: '11px',
-                        color: '#0284c7',
-                        fontWeight: 600,
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Cambiar Archivo
-                    </label>
-                  </>
-                )}
-              </div>
+              {preview2 && (
+                <div className="capture-controls">
+                  {!noLesion2 && box2 && (
+                    <button type="button" onClick={() => setBox2(null)} className="btn-ghost">
+                      Restablecer área
+                    </button>
+                  )}
+                  <label htmlFor="c2" className="btn-ghost">
+                    Cambiar imagen
+                  </label>
+                </div>
+              )}
             </div>
 
             <input
@@ -686,353 +398,257 @@ export default function App() {
               onChange={(e) => handleFileChange(e, 2)}
             />
 
-            {/* Viewport Area */}
-            <div
-              className="pacs-viewport"
-              style={{
-                height: '320px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
+            <div className="capture-body">
               {!preview2 ? (
-                <label
-                  htmlFor="c2"
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '28px 40px',
-                    border: '1px dashed #475569',
-                    backgroundColor: 'rgba(15, 23, 42, 0.75)',
-                    color: '#cbd5e1',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Upload size={22} color="#38bdf8" />
-                  <span style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.02em' }}>
-                    CARGAR IMAGEN DE CONTROL EVOLUTIVO (T1)
-                  </span>
-                  <span className="mono" style={{ fontSize: '11px', color: '#64748b' }}>
-                    INTERVALO ESTÁNDAR: +180 DÍAS (6 MESES)
-                  </span>
+                <label htmlFor="c2" className="upload-dropzone">
+                  <div className="upload-icon-circle">
+                    <Upload size={20} />
+                  </div>
+                  <div className="upload-primary-text">Seleccionar fotografía de seguimiento</div>
+                  <div className="upload-secondary-text">
+                    Utilice condiciones de iluminación y distancia equivalentes al control basal
+                  </div>
                 </label>
               ) : noLesion2 ? (
-                <div
-                  style={{
-                    padding: '24px 32px',
-                    border: '1px solid #dc2626',
-                    backgroundColor: 'rgba(127, 29, 29, 0.35)',
-                    color: '#fecaca',
-                    textAlign: 'center',
-                    maxWidth: '420px'
-                  }}
-                >
-                  <AlertTriangle size={24} color="#f87171" style={{ marginBottom: '8px' }} />
-                  <div style={{ fontWeight: 700, fontSize: '13px', marginBottom: '4px', letterSpacing: '0.03em' }}>
-                    LESIÓN AUSENTE EN CONTROL T1 (ÁREA = 0 px²)
+                <div className="remission-placeholder">
+                  <AlertTriangle size={26} color="#d97706" style={{ marginBottom: '0.5rem' }} />
+                  <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#0f172a', marginBottom: '0.25rem' }}>
+                    Ausencia de Lesión Visible en Control Actual
                   </div>
-                  <div style={{ fontSize: '11.5px', color: '#fca5a5', lineHeight: 1.4 }}>
-                    Se evaluará protocolo de regresión tumoral inmunológica (Δ = -100%) conforme a KB 2 de Triage Oncológico.
+                  <div style={{ fontSize: '0.82rem', color: '#64748b', maxWidth: '380px' }}>
+                    Se registrará reducción total del área pigmentada para evaluar criterios clínicos de regresión o exéresis previa.
                   </div>
                 </div>
               ) : (
                 <div
-                  style={{
-                    position: 'relative',
-                    display: 'inline-block',
-                    cursor: 'crosshair',
-                    userSelect: 'none',
-                    maxHeight: '300px',
-                    maxWidth: '95%'
-                  }}
+                  className="image-stage"
                   onMouseDown={(e) => handleMouseDown(e, 2)}
                   onMouseMove={(e) => handleMouseMove(e, 2)}
                   onMouseUp={() => handleMouseUp(2)}
                 >
-                  <img
-                    src={preview2}
-                    alt="Control T1"
-                    style={{
-                      maxHeight: '300px',
-                      maxWidth: '100%',
-                      display: 'block',
-                      pointerEvents: 'none',
-                      border: '1px solid #334155'
-                    }}
-                  />
+                  <img src={preview2} alt="Registro de Seguimiento" />
                   {box2 && box2.w > 0 && (
                     <div
+                      className="roi-overlay"
                       style={{
-                        position: 'absolute',
-                        border: '1.5px solid #38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.14)',
-                        boxShadow: '0 0 0 1px rgba(11, 17, 30, 0.6)',
                         left: `${box2.x * 100}%`,
                         top: `${box2.y * 100}%`,
                         width: `${box2.w * 100}%`,
                         height: `${box2.h * 100}%`,
-                        pointerEvents: 'none'
                       }}
-                    >
-                      <span
-                        className="mono"
-                        style={{
-                          position: 'absolute',
-                          top: '-18px',
-                          left: 0,
-                          backgroundColor: '#0284c7',
-                          color: '#ffffff',
-                          fontSize: '9.5px',
-                          padding: '1px 4px',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        ROI-T1
-                      </span>
-                    </div>
+                    />
                   )}
                 </div>
               )}
             </div>
 
-            {/* Viewport Telemetry Footer */}
-            <div
-              className="mono"
-              style={{
-                padding: '7px 14px',
-                backgroundColor: '#0f172a',
-                color: '#94a3b8',
-                borderTop: '1px solid #1e293b',
-                fontSize: '11px',
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              <span>ARCHIVO: {file2 ? file2.name : 'SIN_ASIGNAR'}</span>
-              <span style={{ color: '#38bdf8' }}>{formatRoiReadout(box2, noLesion2)}</span>
+            <div className="capture-footer">
+              <span>{file2 ? file2.name : 'Ningún archivo seleccionado'}</span>
+              {preview2 ? (
+                <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155', fontWeight: 500 }}>
+                  <input
+                    type="checkbox"
+                    checked={noLesion2}
+                    onChange={(e) => {
+                      setNoLesion2(e.target.checked);
+                      if (e.target.checked) setBox2(null);
+                    }}
+                  />
+                  Lesión ausente en control actual
+                </label>
+              ) : (
+                <span>Arrastre sobre la imagen para delimitar la lesión</span>
+              )}
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
 
-        {/* ERROR BANNER */}
+        {/* ACTION BAR */}
+        <section className="action-bar no-print">
+          <div className="action-hint">
+            <Info size={16} color="#0f766e" style={{ flexShrink: 0 }} />
+            <span>
+              Al iniciar el análisis, el sistema segmenta el borde de la lesión en ambos controles, calcula la variación morfométrica y genera el informe clínico de apoyo.
+            </span>
+          </div>
+
+          <button
+            onClick={handleAnalyze}
+            disabled={!file1 || !file2 || loading}
+            className="btn btn-primary"
+          >
+            <Activity size={16} />
+            {loading ? 'Analizando evolución y generando informe...' : 'Generar Evaluación Comparativa'}
+          </button>
+        </section>
+
+        {/* ERROR MESSAGE */}
         {error && (
           <div
             style={{
-              padding: '12px 16px',
+              padding: '1rem 1.25rem',
               backgroundColor: '#fef2f2',
-              border: '1px solid #dc2626',
-              borderLeft: '4px solid #dc2626',
+              border: '1px solid #fecaca',
+              borderRadius: '8px',
               color: '#991b1b',
-              marginBottom: '20px',
-              fontSize: '13px',
+              marginBottom: '1.5rem',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px'
+              gap: '0.75rem',
+              fontSize: '0.9rem'
             }}
           >
-            <AlertTriangle size={16} color="#dc2626" />
+            <AlertTriangle size={18} />
             <div>
-              <strong>EXCEPCIÓN DE SISTEMA:</strong> {error}
+              <strong>No se pudo completar el análisis:</strong> {error}
             </div>
           </div>
         )}
 
-        {/* RESULTS WORKSPACE */}
-        {result && statusInfo && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {/* AUTOMATED TRIAGE CLASSIFICATION BANNER */}
+        {/* CLINICAL RESULTS */}
+        {result && triage && (
+          <div className="results-stack">
+            {/* TRIAGE SUMMARY BANNER */}
             <div
+              className="triage-banner"
               style={{
-                backgroundColor: statusInfo.bg,
-                border: `1px solid ${statusInfo.border}`,
-                borderLeft: `5px solid ${statusInfo.border}`,
-                padding: '14px 18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '12px'
+                backgroundColor: triage.bg,
+                borderColor: triage.border,
+                borderLeft: `4px solid ${triage.accent}`,
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span
-                  className="mono"
-                  style={{
-                    backgroundColor: statusInfo.badgeBg,
-                    color: '#ffffff',
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    padding: '4px 8px',
-                    letterSpacing: '0.04em'
-                  }}
-                >
-                  DICTAMEN AUTOMÁTICO DE TRIAGE
-                </span>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '14px', color: statusInfo.color }}>
-                    {statusInfo.level}
-                  </div>
-                  <div className="mono" style={{ fontSize: '11.5px', color: statusInfo.color, marginTop: '2px' }}>
-                    CRITERIO ACTIVADO: {statusInfo.reason}
-                  </div>
+              <div>
+                <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: triage.accent, marginBottom: '0.2rem' }}>
+                  Orientación de Prioridad Clínica
+                </div>
+                <div style={{ fontSize: '1.05rem', fontWeight: 700, color: triage.text }}>
+                  {triage.priority}
+                </div>
+                <div style={{ fontSize: '0.875rem', color: triage.text, marginTop: '0.15rem' }}>
+                  {triage.summary}
                 </div>
               </div>
 
-              <div className="mono" style={{ fontSize: '11px', color: '#475569', textAlign: 'right' }}>
-                <div>MODELO FRONTERA: AZURE OPENAI GPT-4o (T=0.25)</div>
-                <div>ÍNDICES CONSULTADOS: KB-1 (CONSENSO/MINSAL) + KB-2 (TRIAGE GES)</div>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="btn btn-secondary no-print"
+              >
+                <Printer size={15} />
+                Imprimir / Guardar PDF
+              </button>
+            </div>
+
+            {/* 3 KPI SUMMARY CARDS */}
+            <div className="kpi-grid">
+              <div className="kpi-card">
+                <div className="kpi-label">Variación de Superficie (Δ Área)</div>
+                <div
+                  className="kpi-value"
+                  style={{
+                    color:
+                      result.metrics.delta_area_percent >= 20 || result.metrics.delta_area_percent <= -30
+                        ? '#dc2626'
+                        : '#0f766e'
+                  }}
+                >
+                  {result.metrics.delta_area_percent > 0
+                    ? `+${result.metrics.delta_area_percent}%`
+                    : `${result.metrics.delta_area_percent}%`}
+                </div>
+                <div className="kpi-sub">
+                  Control 1: {result.metrics.control_1_area} px² → Control 2: {result.metrics.control_2_area} px²
+                </div>
+              </div>
+
+              <div className="kpi-card">
+                <div className="kpi-label">Variación de Simetría (Circularidad)</div>
+                <div className="kpi-value">
+                  {result.metrics.delta_circularity > 0
+                    ? `+${result.metrics.delta_circularity}`
+                    : result.metrics.delta_circularity}
+                </div>
+                <div className="kpi-sub">
+                  Índice Basal: {result.metrics.control_1_circularity} → Actual: {result.metrics.control_2_circularity}
+                </div>
+              </div>
+
+              <div className="kpi-card">
+                <div className="kpi-label">Conducta Sugerida</div>
+                <div style={{ fontSize: '1rem', fontWeight: 600, color: '#0f172a', marginTop: '0.2rem' }}>
+                  {triage.action}
+                </div>
+                <div className="kpi-sub">
+                  Localización: {anatomicalSite} ({controlInterval})
+                </div>
               </div>
             </div>
 
-            {/* QUANTITATIVE MORPHOMETRIC TELEMETRY + SEGMENTED MASKS */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: '18px' }}>
-              {/* Left: Segmented Binary Contours */}
-              <div
-                style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #dce2ec',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <div
-                  style={{
-                    padding: '10px 14px',
-                    backgroundColor: '#f8fafc',
-                    borderBottom: '1px solid #dce2ec',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <SlidersHorizontal size={14} color="#0284c7" />
-                    <span style={{ fontWeight: 600, fontSize: '12.5px', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-                      Contornos de Segmentación Perimetral CIE L*a*b* ΔE
-                    </span>
-                  </div>
-                  <span className="mono" style={{ fontSize: '11px', color: '#64748b' }}>
-                    KERNEL ELÍPTICO 5×5 • OTSU
+            {/* SEGMENTED MASKS & QUANTITATIVE TABLE */}
+            <div className="analysis-grid">
+              {/* Segmented Contours */}
+              <div className="section-card">
+                <div className="section-header">
+                  <h3 className="section-title">
+                    <ScanLine size={16} color="#0f766e" />
+                    Delimitación Automática de Contornos
+                  </h3>
+                  <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                    Comparativa T0 vs. T1
                   </span>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', padding: '14px' }}>
-                  <div style={{ border: '1px solid #dce2ec', backgroundColor: '#0b111e' }}>
-                    <div
-                      className="mono"
-                      style={{
-                        padding: '5px 10px',
-                        fontSize: '11px',
-                        color: '#cbd5e1',
-                        borderBottom: '1px solid #1e293b',
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                      }}
-                    >
-                      <span>MÁSCARA T0 (BASAL)</span>
-                      <span style={{ color: '#38bdf8' }}>{result.metrics.control_1_area} px²</span>
+                <div className="masks-pair">
+                  <div className="mask-box">
+                    <div className="mask-box-header">
+                      <span>Control 1 (Basal)</span>
+                      <span>{result.metrics.control_1_area} px²</span>
                     </div>
-                    <img
-                      src={result.control_1_image}
-                      alt="Segmentación T0"
-                      style={{ width: '100%', height: '210px', objectFit: 'contain', display: 'block' }}
-                    />
+                    <img src={result.control_1_image} alt="Segmentación Control 1" />
                   </div>
 
-                  <div style={{ border: '1px solid #dce2ec', backgroundColor: '#0b111e' }}>
-                    <div
-                      className="mono"
-                      style={{
-                        padding: '5px 10px',
-                        fontSize: '11px',
-                        color: '#cbd5e1',
-                        borderBottom: '1px solid #1e293b',
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                      }}
-                    >
-                      <span>MÁSCARA T1 (+6 MESES)</span>
-                      <span style={{ color: '#38bdf8' }}>{result.metrics.control_2_area} px²</span>
+                  <div className="mask-box">
+                    <div className="mask-box-header">
+                      <span>Control 2 (Actual)</span>
+                      <span>{result.metrics.control_2_area} px²</span>
                     </div>
-                    <img
-                      src={result.control_2_image}
-                      alt="Segmentación T1"
-                      style={{ width: '100%', height: '210px', objectFit: 'contain', display: 'block' }}
-                    />
+                    <img src={result.control_2_image} alt="Segmentación Control 2" />
                   </div>
                 </div>
               </div>
 
-              {/* Right: Tabular Morphometric Readout & RAG Evidence */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-                <div style={{ backgroundColor: '#ffffff', border: '1px solid #dce2ec' }}>
-                  <div
-                    style={{
-                      padding: '10px 14px',
-                      backgroundColor: '#f8fafc',
-                      borderBottom: '1px solid #dce2ec',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <span style={{ fontWeight: 600, fontSize: '12.5px', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-                      Matriz Morfométrica Diferencial (Nodo Edge)
-                    </span>
-                    <span className="mono" style={{ fontSize: '11px', color: '#0d9488' }}>
-                      PAYLOAD ANONIMIZADO
-                    </span>
+              {/* Morphometric Table & Clinical Guidelines */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div className="section-card">
+                  <div className="section-header">
+                    <h3 className="section-title">Resumen Cuantitativo de Mediciones</h3>
                   </div>
 
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
+                  <table className="clinical-table">
                     <thead>
-                      <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #dce2ec', color: '#475569', fontSize: '11px' }}>
-                        <th style={{ padding: '8px 12px', textAlign: 'left' }}>PARÁMETRO</th>
-                        <th style={{ padding: '8px 12px', textAlign: 'right' }}>BASAL (T0)</th>
-                        <th style={{ padding: '8px 12px', textAlign: 'right' }}>CONTROL (T1)</th>
-                        <th style={{ padding: '8px 12px', textAlign: 'right' }}>DELTA (Δ)</th>
+                      <tr>
+                        <th>Parámetro</th>
+                        <th>Basal</th>
+                        <th>Actual</th>
+                        <th>Diferencia</th>
                       </tr>
                     </thead>
-                    <tbody className="mono">
-                      <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                        <td style={{ padding: '9px 12px', fontFamily: 'var(--font-sans)', fontWeight: 600, color: '#0f172a' }}>
-                          Área Lesional (px²)
-                        </td>
-                        <td style={{ padding: '9px 12px', textAlign: 'right' }}>{result.metrics.control_1_area}</td>
-                        <td style={{ padding: '9px 12px', textAlign: 'right' }}>{result.metrics.control_2_area}</td>
-                        <td
-                          style={{
-                            padding: '9px 12px',
-                            textAlign: 'right',
-                            fontWeight: 700,
-                            color:
-                              result.metrics.delta_area_percent >= 20 || result.metrics.delta_area_percent <= -30
-                                ? '#dc2626'
-                                : '#0d9488'
-                          }}
-                        >
+                    <tbody>
+                      <tr>
+                        <td style={{ fontWeight: 600 }}>Superficie (px²)</td>
+                        <td>{result.metrics.control_1_area}</td>
+                        <td>{result.metrics.control_2_area}</td>
+                        <td style={{ fontWeight: 600 }}>
                           {result.metrics.delta_area_percent > 0
                             ? `+${result.metrics.delta_area_percent}%`
                             : `${result.metrics.delta_area_percent}%`}
                         </td>
                       </tr>
                       <tr>
-                        <td style={{ padding: '9px 12px', fontFamily: 'var(--font-sans)', fontWeight: 600, color: '#0f172a' }}>
-                          Circularidad (4πA/P²)
-                        </td>
-                        <td style={{ padding: '9px 12px', textAlign: 'right' }}>{result.metrics.control_1_circularity}</td>
-                        <td style={{ padding: '9px 12px', textAlign: 'right' }}>{result.metrics.control_2_circularity}</td>
-                        <td
-                          style={{
-                            padding: '9px 12px',
-                            textAlign: 'right',
-                            fontWeight: 700,
-                            color: result.metrics.delta_circularity <= -0.08 ? '#d97706' : '#334155'
-                          }}
-                        >
+                        <td style={{ fontWeight: 600 }}>Circularidad (0–1)</td>
+                        <td>{result.metrics.control_1_circularity}</td>
+                        <td>{result.metrics.control_2_circularity}</td>
+                        <td style={{ fontWeight: 600 }}>
                           {result.metrics.delta_circularity > 0
                             ? `+${result.metrics.delta_circularity}`
                             : result.metrics.delta_circularity}
@@ -1042,39 +658,21 @@ export default function App() {
                   </table>
                 </div>
 
-                {/* Retrieved RAG Context Box */}
-                <div style={{ backgroundColor: '#ffffff', border: '1px solid #dce2ec', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div
-                    style={{
-                      padding: '8px 14px',
-                      backgroundColor: '#f8fafc',
-                      borderBottom: '1px solid #dce2ec',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Database size={13} color="#d97706" />
-                      <span style={{ fontWeight: 600, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-                        Evidencia Clínica Recuperada (RAG Híbrido)
-                      </span>
-                    </div>
-                    <span className="mono" style={{ fontSize: '10.5px', color: '#64748b' }}>
-                      TOP-K=2 CHUNKS
-                    </span>
+                <div className="section-card" style={{ flex: 1 }}>
+                  <div className="section-header">
+                    <h3 className="section-title">
+                      <BookOpen size={15} color="#0f766e" />
+                      Criterios de Guías Clínicas Aplicados
+                    </h3>
                   </div>
                   <div
-                    className="mono"
                     style={{
-                      padding: '12px 14px',
-                      fontSize: '11.5px',
-                      color: '#334155',
-                      lineHeight: 1.5,
-                      backgroundColor: '#fcfcfd',
-                      maxHeight: '135px',
-                      overflowY: 'auto',
-                      whiteSpace: 'pre-wrap'
+                      padding: '1rem 1.25rem',
+                      fontSize: '0.825rem',
+                      color: '#475569',
+                      lineHeight: 1.6,
+                      maxHeight: '150px',
+                      overflowY: 'auto'
                     }}
                   >
                     {result.retrieved_guidelines}
@@ -1083,33 +681,20 @@ export default function App() {
               </div>
             </div>
 
-            {/* FULL CLINICAL REPORT DOSSIER */}
-            <div style={{ backgroundColor: '#ffffff', border: '1px solid #dce2ec' }}>
-              <div
-                style={{
-                  padding: '12px 20px',
-                  backgroundColor: '#0f172a',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <FileText size={16} color="#38bdf8" />
-                  <span style={{ fontWeight: 600, fontSize: '13.5px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    Dictamen Asistido de Evolución Dermatológica
-                  </span>
-                </div>
-                <div className="mono" style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '11px', color: '#94a3b8' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#34d399' }}>
-                    <CheckCircle2 size={13} /> VALIDADO POR ORQUESTADOR ADK
-                  </span>
-                  <span>ESTUDIO: {studyId}</span>
-                </div>
+            {/* CLINICAL REPORT CARD */}
+            <div className="section-card">
+              <div className="section-header">
+                <h3 className="section-title">
+                  <FileText size={16} color="#0f766e" />
+                  Informe de Evolución Dermatoscópica
+                </h3>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem', color: '#0f766e', fontWeight: 600 }}>
+                  <CheckCircle2 size={14} />
+                  Ficha: {patientCode}
+                </span>
               </div>
 
-              <div style={{ padding: '24px 28px' }}>
+              <div className="report-body">
                 <div className="markdown-body">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {result.clinical_report}
@@ -1117,21 +702,11 @@ export default function App() {
                 </div>
               </div>
 
-              <div
-                style={{
-                  padding: '10px 20px',
-                  backgroundColor: '#f8fafc',
-                  borderTop: '1px solid #dce2ec',
-                  fontSize: '11.5px',
-                  color: '#64748b',
-                  display: 'flex',
-                  justifyContent: 'space-between'
-                }}
-              >
+              <div className="report-footer">
                 <span>
-                  NOTA LEGAL: Sistema de apoyo cuantitativo a la decisión clínica. Requiere validación presencial por médico dermatólogo colegiado.
+                  Documento de apoyo al diagnóstico médico. La indicación terapéutica o quirúrgica definitiva corresponde al médico especialista tratante.
                 </span>
-                <span className="mono">LEY 20.584 / HIPAA COMPLIANT EDGE</span>
+                <span>DermaGuard Clinical Suite • Ley 20.584</span>
               </div>
             </div>
           </div>
