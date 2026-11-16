@@ -1,11 +1,18 @@
 import json
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from vision import process_lesion_image, calculate_differential_metrics
-from rag import populate_initial_guidelines, query_clinical_guidelines
-from llm_client import generate_clinical_report
+from rag import populate_initial_guidelines
+from adk_agents import (
+    orchestrator_agent,
+    list_clinical_records,
+    RECENT_TRACES
+)
 
-app = FastAPI(title="DermaGuard AI API", version="1.2.0")
+app = FastAPI(
+    title="DermaGuard AI - Multi-Agent ADK Clinical API",
+    version="2.0.0",
+    description="API de Orquestación Multi-Agente (3 Niveles ADK), 2 Knowledge Bases RAG y Persistencia Clínica Segura."
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,6 +23,7 @@ app.add_middleware(
 )
 
 populate_initial_guidelines()
+
 
 @app.post("/api/dermatology-analyze")
 async def analyze_dermatology(
@@ -31,27 +39,50 @@ async def analyze_dermatology(
         box_1 = json.loads(roi_1) if roi_1 else None
         box_2 = json.loads(roi_2) if roi_2 else None
 
-        metrics_1, mask_1 = process_lesion_image(bytes_1, roi_box=box_1)
-        metrics_2, mask_2 = process_lesion_image(bytes_2, roi_box=box_2)
-        diff_metrics = calculate_differential_metrics(metrics_1, metrics_2)
-
-        # RAG con guías base y PDFs indexados
-        search_query = (
-            f"Lesión con cambio de área {diff_metrics['delta_area_percent']}% "
-            f"y variación de circularidad {diff_metrics['delta_circularity']}"
+        result = await orchestrator_agent.execute_pipeline(
+            bytes_1=bytes_1,
+            bytes_2=bytes_2,
+            box_1=box_1,
+            box_2=box_2
         )
-        retrieved_context = query_clinical_guidelines(search_query, n_results=2)
-
-        # Informe generado por el modelo local
-        clinical_report = await generate_clinical_report(diff_metrics, retrieved_context)
-
-        return {
-            "control_1_image": mask_1,
-            "control_2_image": mask_2,
-            "metrics": diff_metrics,
-            "retrieved_guidelines": retrieved_context,
-            "clinical_report": clinical_report
-        }
+        return result
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/clinical-records")
+async def get_clinical_records(limit: int = 25):
+    """Devuelve los registros clínicos persistidos en la base de datos propia con su hash SHA-256."""
+    return {
+        "count": len(list_clinical_records(limit)),
+        "records": list_clinical_records(limit)
+    }
+
+
+@app.get("/api/observability-logs")
+async def get_observability_logs(limit: int = 50):
+    """Devuelve las trazas de observabilidad, latencias por agente y eventos de timeout/reintento."""
+    traces = RECENT_TRACES[-limit:]
+    return {
+        "total_events": len(traces),
+        "traces": list(reversed(traces))
+    }
+
+
+@app.get("/api/adk-topology")
+async def get_adk_topology():
+    """Expone la jerarquía activa de 3 niveles de profundidad (9 nodos) en el sistema ADK."""
+    return {
+        "framework": "Google ADK Multi-Agent Architecture",
+        "depth_levels": 3,
+        "total_agents": 9,
+        "level_1_root": orchestrator_agent.name,
+        "level_2_coordinators": [a.name for a in orchestrator_agent.sub_agents],
+        "level_3_workers_and_kb_agents": [
+            "Guidelines_KB_Agent (KB1: Consenso Melanoma + Guía MINSAL)",
+            "Triage_Protocol_Agent (KB2: Protocolos Triage GES + Regresión)",
+            "Prompt_Synthesis_Worker (Azure AI Foundry GPT-4o + Retry/Fallback)",
+            "Audit_Security_Worker (Tool API Base de Datos Propia SQLite/Pydantic)"
+        ]
+    }

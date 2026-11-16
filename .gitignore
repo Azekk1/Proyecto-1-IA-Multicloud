@@ -24,6 +24,9 @@ frontend/dist/
 chroma_db/
 backend/chroma_db/
 chroma_data/
+*.db
+*.sqlite3
+*.log
 
 # Variables de entorno y configs locales
 .env
